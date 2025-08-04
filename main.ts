@@ -125,7 +125,7 @@ namespace robotbit {
 
     function initPCA9685(): void {
         i2cwrite(PCA9685_ADDRESS, MODE1, 0x00)
-        setFreq(50);
+        setFreq(48);
         for (let idx = 0; idx < 16; idx++) {
             setPwm(idx, 0, 0);
         }
@@ -237,7 +237,7 @@ namespace robotbit {
             initPCA9685()
         }
         // 50hz: 20,000 us
-        let v_us = (degree * 1800 / 180 + 600) // 0.6 ~ 2.4
+        let v_us = (degree * 2000 / 180 + 500) // 0.5 ~ 2.5
         let value = v_us * 4096 / 20000
         setPwm(index + 7, 0, value)
     }
@@ -611,3 +611,4 @@ namespace robotbit {
         }
     }
 }
+
