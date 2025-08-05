@@ -103,7 +103,7 @@ namespace robotbit {
     let neoStrip: neopixel.Strip;
     let matBuf = pins.createBuffer(17);
     let distanceBuf = 0;
-    let frequencyOfPWM = 50;
+    let oscillatorFrequency = 25000000
 
     function i2cwrite(addr: number, reg: number, value: number) {
         let buf = pins.createBuffer(2)
@@ -126,7 +126,7 @@ namespace robotbit {
 
     function initPCA9685(): void {
         i2cwrite(PCA9685_ADDRESS, MODE1, 0x00)
-        setFreq(frequencyOfPWM);
+        setFreq(50);
         for (let idx = 0; idx < 16; idx++) {
             setPwm(idx, 0, 0);
         }
@@ -134,24 +134,25 @@ namespace robotbit {
     }
 
     /**
-     * PWM frequency
-     * @param freq [40 - 60] 
+     * oscillator frequency
+     * @param freq [23000000 - 27000000] 
     */
-    //% blockId=robotbit_frequency block="PWMfrequency|%freq"
+    //% blockId=robotbit_frequency block="oscilator frequency|%freq"
     //% group="Servo" weight=62
-    //% freq.min=40 freq.max=60
-    export function PWMfreq(freq: number): void {
-	frequencyOfPWM = freq;
+    //% freq.min=23000000 freq.max=27000000
+    export function SetOscillatorFrequency(freq: number): void {
+	oscillatorFrequency = freq;
         initPCA9685()
     }
 
     function setFreq(freq: number): void {
         // Constrain the frequency
-        let prescaleval = 25000000;
+        let prescaleval = oscillatorFrequency;
         prescaleval /= 4096;
         prescaleval /= freq;
         prescaleval -= 1;
-        let prescale = prescaleval; //Math.Floor(prescaleval + 0.5);
+        let prescale = prescaleval; 
+	//Math.Floor(prescaleval + 0.5);
         let oldmode = i2cread(PCA9685_ADDRESS, MODE1);
         let newmode = (oldmode & 0x7F) | 0x10; // sleep
         i2cwrite(PCA9685_ADDRESS, MODE1, newmode); // go to sleep
@@ -624,6 +625,7 @@ namespace robotbit {
         }
     }
 }
+
 
 
 
