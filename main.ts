@@ -137,7 +137,7 @@ namespace robotbit {
      * PWM frequency
      * @param freq [40 - 60] 
     */
-    //% blockId=robotbit_servo block="PWMfrequency|%freq"
+    //% blockId=robotbit_frequency block="PWMfrequency|%freq"
     //% group="Servo" weight=62
     //% freq.min=40 freq.max=60
     export function PWMfreq(freq: number): void {
@@ -624,6 +624,7 @@ namespace robotbit {
         }
     }
 }
+
 
 
 
