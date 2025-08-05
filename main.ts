@@ -140,7 +140,7 @@ namespace robotbit {
     //% blockId=robotbit_prescale block="set prescale|%count"
     //% group="Servo" weight=62
     //% count.min=3 count.max=255
-    export function setPrescaleFrequency(count: number): void {
+    export function setPrescaleCount(count: number): void {
 	prescale = count;
         initPCA9685()
     }
@@ -622,6 +622,7 @@ namespace robotbit {
         }
     }
 }
+
 
 
 
