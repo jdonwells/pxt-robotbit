@@ -137,11 +137,11 @@ namespace robotbit {
      * oscillator frequency
      * @param freq [23000000 - 27000000] 
     */
-    //% blockId=robotbit_frequency block="oscilator frequency|%freq"
+    //% blockId=robotbit_frequency block="oscilator frequency (MHz)|%freq"
     //% group="Servo" weight=62
-    //% freq.min=23000000 freq.max=27000000
+    //% freq.min=22 freq.max=28
     export function SetOscillatorFrequency(freq: number): void {
-	oscillatorFrequency = freq;
+	oscillatorFrequency = freq * 1000000;
         initPCA9685()
     }
 
@@ -625,6 +625,7 @@ namespace robotbit {
         }
     }
 }
+
 
 
 
