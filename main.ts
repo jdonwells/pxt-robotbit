@@ -150,9 +150,9 @@ namespace robotbit {
         let prescaleval = oscillatorFrequency;
         prescaleval /= 4096;
         prescaleval /= freq;
+	prescaleval = Math.round(prescaleval);
         prescaleval -= 1;
-        let prescale = prescaleval; 
-	//Math.Floor(prescaleval + 0.5);
+        let prescale = prescaleval;
         let oldmode = i2cread(PCA9685_ADDRESS, MODE1);
         let newmode = (oldmode & 0x7F) | 0x10; // sleep
         i2cwrite(PCA9685_ADDRESS, MODE1, newmode); // go to sleep
@@ -625,6 +625,7 @@ namespace robotbit {
         }
     }
 }
+
 
 
 
