@@ -103,7 +103,6 @@ namespace robotbit {
     let neoStrip: neopixel.Strip;
     let matBuf = pins.createBuffer(17);
     let distanceBuf = 0;
-    let oscillatorFrequency = 25000000;
     let prescale = 0;
 
     function i2cwrite(addr: number, reg: number, value: number) {
@@ -135,33 +134,21 @@ namespace robotbit {
     }
 
     /**
-     * oscillator frequency
-     * @param freq [22 - 28] 
+     * prescale count
+     * @param count [3 - 255] 
     */
-    //% blockId=robotbit_frequency block="oscilator frequency (MHz)|%freq"
+    //% blockId=robotbit_prescale block="set prescale|%count"
     //% group="Servo" weight=62
-    //% freq.min=22 freq.max=28
-    export function SetOscillatorFrequency(freq: number): void {
-	oscillatorFrequency = freq * 1000000;
-        initPCA9685()
-    }
-
-    /**
-     * prescale frequency
-     * @param freq [3 - 255] 
-    */
-    //% blockId=robotbit_prescale block="set prescale|%freq"
-    //% group="Servo" weight=62
-    //% freq.min=3 freq.max=255
-    export function setPrescaleFrequency(freq: number): void {
-	prescale = freq;
+    //% count.min=3 count.max=255
+    export function setPrescaleFrequency(count: number): void {
+	prescale = count;
         initPCA9685()
     }
 
     function setFreq(freq: number): void {
         // Constrain the frequency
 	if (prescale == 0) {
-	    prescale = Math.round(oscillatorFrequency / (4096 * freq)) - 1;
+	    prescale = Math.round(25000000 / (4096 * freq)) - 1;
 	}
         let oldmode = i2cread(PCA9685_ADDRESS, MODE1);
         let newmode = (oldmode & 0x7F) | 0x10; // sleep
@@ -635,6 +622,7 @@ namespace robotbit {
         }
     }
 }
+
 
 
 
