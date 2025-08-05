@@ -160,7 +160,9 @@ namespace robotbit {
 
     function setFreq(freq: number): void {
         // Constrain the frequency
-	prescale = Math.round(oscillatorFrequency / (4096 * freq)) - 1;
+	if (prescale == 0) {
+	    prescale = Math.round(oscillatorFrequency / (4096 * freq)) - 1;
+	}
         let oldmode = i2cread(PCA9685_ADDRESS, MODE1);
         let newmode = (oldmode & 0x7F) | 0x10; // sleep
         i2cwrite(PCA9685_ADDRESS, MODE1, newmode); // go to sleep
@@ -633,6 +635,7 @@ namespace robotbit {
         }
     }
 }
+
 
 
 
