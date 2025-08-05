@@ -135,7 +135,7 @@ namespace robotbit {
 
     /**
      * oscillator frequency
-     * @param freq [23000000 - 27000000] 
+     * @param freq [22 - 28] 
     */
     //% blockId=robotbit_frequency block="oscilator frequency (MHz)|%freq"
     //% group="Servo" weight=62
@@ -625,6 +625,7 @@ namespace robotbit {
         }
     }
 }
+
 
 
 
