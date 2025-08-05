@@ -103,6 +103,7 @@ namespace robotbit {
     let neoStrip: neopixel.Strip;
     let matBuf = pins.createBuffer(17);
     let distanceBuf = 0;
+    let frequencyOfPWM = 50;
 
     function i2cwrite(addr: number, reg: number, value: number) {
         let buf = pins.createBuffer(2)
@@ -125,11 +126,23 @@ namespace robotbit {
 
     function initPCA9685(): void {
         i2cwrite(PCA9685_ADDRESS, MODE1, 0x00)
-        setFreq(48.25);
+        setFreq(frequencyOfPWM);
         for (let idx = 0; idx < 16; idx++) {
             setPwm(idx, 0, 0);
         }
         initialized = true
+    }
+
+    /**
+     * PWM frequency
+     * @param freq [40 - 60] 
+    */
+    //% blockId=robotbit_servo block="PWMfrequency|%freq"
+    //% group="Servo" weight=62
+    //% freq.min=40 freq.max=60
+    export function PWMfreq(freq: number): void {
+	frequencyOfPWM = freq;
+        initPCA9685()
     }
 
     function setFreq(freq: number): void {
@@ -611,6 +624,7 @@ namespace robotbit {
         }
     }
 }
+
 
 
 
